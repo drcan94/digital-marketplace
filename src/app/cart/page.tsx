@@ -13,7 +13,6 @@ import { useEffect, useState } from "react";
 
 const Page = () => {
   const { items, removeItem } = useCart();
-
   const router = useRouter();
 
   const { mutate: createCheckoutSession, isLoading } =
@@ -24,8 +23,11 @@ const Page = () => {
     });
 
   const productIds = items.map(({ product }) => {
-    console.log(product.quantity);
     return product.id;
+  });
+
+  const productQuantities = items.map(({ product }) => {
+    return { id: product.id, quantity: product.quantity };
   });
 
   const [isMounted, setIsMounted] = useState<boolean>(false);
@@ -206,7 +208,9 @@ const Page = () => {
             <div className="mt-6">
               <Button
                 disabled={items.length === 0 || isLoading}
-                onClick={() => createCheckoutSession({ productIds })}
+                onClick={() =>
+                  createCheckoutSession({ productIds, productQuantities })
+                }
                 className="w-full"
                 size="lg"
               >

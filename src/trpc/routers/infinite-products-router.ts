@@ -1,6 +1,6 @@
-import { publicProcedure, router } from "./trpc";
-import { QueryValidator } from "../lib/validators/query-validator";
-import { getPayloadClient } from "../get-payload";
+import { publicProcedure, router } from "../trpc";
+import { QueryValidator } from "../../lib/validators/query-validator";
+import { getPayloadClient } from "../../get-payload";
 import { z } from "zod";
 
 export const infiniteProductsRouter = router({
@@ -17,7 +17,6 @@ export const infiniteProductsRouter = router({
       const { sort, limit, ...queryOpts } = query;
 
       const payload = await getPayloadClient();
-
       const page = cursor || 1;
 
       const parsedQueryOpts: Record<string, { equals: string }> = {};
@@ -45,7 +44,6 @@ export const infiniteProductsRouter = router({
         limit,
         page,
       });
-
       return {
         items,
         nextPage: hasNextPage ? nextPage : null,

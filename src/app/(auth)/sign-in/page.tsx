@@ -8,7 +8,7 @@ import { Button, buttonVariants } from "@/components/ui/button";
 import {
   AuthCredentialsValidator,
   TAuthCredentialsValidator,
-} from "@/lib/validators/account-credentials-validator";
+} from "@/lib/validators/auth-credentials-validator";
 import { trpc } from "@/trpc/client";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ArrowRight, Loader2 } from "lucide-react";
@@ -58,7 +58,6 @@ const Page = () => {
         return;
       }
       if (error instanceof ZodError) {
-        console.log(error.issues);
         toast.error(error.issues[0].message);
         return;
       }

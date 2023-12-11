@@ -20,6 +20,8 @@ export interface Config {
 }
 export interface User {
   id: string;
+  products?: (string | Product)[] | null;
+  product_files?: (string | ProductFile)[] | null;
   role: 'admin' | 'user';
   updatedAt: string;
   createdAt: string;
@@ -106,7 +108,11 @@ export interface Order {
   id: string;
   _isPaid: boolean;
   user: string | User;
-  products: (string | Product)[];
+  orderedProducts: {
+    product: string | Product;
+    quantity: number;
+    id?: string | null;
+  }[];
   updatedAt: string;
   createdAt: string;
 }

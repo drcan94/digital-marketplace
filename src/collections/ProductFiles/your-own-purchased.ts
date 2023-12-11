@@ -31,15 +31,15 @@ export const yourOwnAndPurchased: Access = async ({ req }) => {
 
   const purchasedProductFileIds = orders
     .map((order) => {
-      return order.products.map((product) => {
-        if (typeof product === "string")
+      return order.orderedProducts.map((item) => {
+        if (typeof item.product === "string")
           return req.payload.logger.error(
             "Search depth not sufficient to find purchased file IDs"
           );
 
-        return typeof product.product_files === "string"
-          ? product.product_files
-          : product.product_files.id;
+        return typeof item.product.product_files === "string"
+          ? item.product.product_files
+          : item.product.product_files.id;
       });
     })
     .filter(Boolean)

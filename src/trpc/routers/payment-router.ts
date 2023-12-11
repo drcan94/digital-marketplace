@@ -1,16 +1,23 @@
 import { z } from "zod";
-import { privateProcedure, router } from "./trpc";
+import { privateProcedure, router } from "../trpc";
 import { TRPCError } from "@trpc/server";
-import { getPayloadClient } from "../get-payload";
-import { stripe } from "../lib/stripe";
+import { getPayloadClient } from "../../get-payload";
+import { stripe } from "../../lib/stripe";
 import type Stripe from "stripe";
 
 export const paymentRouter = router({
   createSession: privateProcedure
-    .input(z.object({ productIds: z.array(z.string()) }))
+    .input(
+      z.object({
+        productIds: z.array(z.string()),
+        productQuantities: z.array(
+          z.object({ id: z.string(), quantity: z.number() })
+        ),
+      })
+    )
     .mutation(async ({ ctx, input }) => {
       const { user } = ctx;
-      let { productIds } = input;
+      let { productIds, productQuantities } = input;
 
       if (productIds.length === 0) {
         throw new TRPCError({ code: "BAD_REQUEST" });
@@ -33,7 +40,12 @@ export const paymentRouter = router({
         collection: "orders",
         data: {
           _isPaid: false,
-          products: filteredProducts.map((prod) => prod.id),
+          orderedProducts: productQuantities.map((prod) => {
+            return {
+              product: prod.id,
+              quantity: prod.quantity,
+            };
+          }),
           user: user.id,
         },
       });
@@ -41,9 +53,13 @@ export const paymentRouter = router({
       const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = [];
 
       filteredProducts.forEach((product) => {
+        const selectedItem = productQuantities.find(
+          (prod) => prod.id === product.id
+        );
+        const quantity = selectedItem?.quantity || 1;
         line_items.push({
           price: product.priceId!,
-          quantity: 1,
+          quantity,
         });
       });
 

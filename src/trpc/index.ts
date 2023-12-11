@@ -1,7 +1,7 @@
 import { router } from "./trpc";
-import { authRouter } from "./auth-router";
-import { paymentRouter } from "./payment-router";
-import { infiniteProductsRouter } from "./infinite-products-router";
+import { authRouter } from "./routers/auth-router";
+import { paymentRouter } from "./routers/payment-router";
+import { infiniteProductsRouter } from "./routers/infinite-products-router";
 
 export const appRouter = router({
   auth: authRouter,

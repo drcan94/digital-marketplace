@@ -1,9 +1,7 @@
 import dotenv from "dotenv";
 import path from "path";
-
 import type { InitOptions } from "payload/config";
 import payload, { Payload } from "payload";
-
 import nodemailer from "nodemailer";
 
 dotenv.config({
@@ -33,15 +31,11 @@ interface Args {
   initOptions?: Partial<InitOptions>;
 }
 
-// export const getPayloadClient (args: Args) => Promise<any> = async ({ initOptions } = {}) => {};
-// or
-// export const getPayloadClient = async ({ initOptions }: Args = {}) => {};
-
 export const getPayloadClient = async ({
   initOptions,
 }: Args = {}): Promise<Payload> => {
   if (!process.env.PAYLOAD_SECRET) {
-    throw new Error("PAYLOAD_SECRET is not defined");
+    throw new Error("PAYLOAD_SECRET is missing");
   }
 
   if (cached.client) {
@@ -52,8 +46,8 @@ export const getPayloadClient = async ({
     cached.promise = payload.init({
       email: {
         transport: transporter,
-        fromAddress: "onboarding@resend.dev", // onboarding@resend.dev -> only for testing
-        fromName: "Bee Akademi Mock",
+        fromAddress: "onboarding@resend.dev",
+        fromName: "DigitalHippo",
       },
       secret: process.env.PAYLOAD_SECRET,
       local: initOptions?.express ? false : true,
@@ -63,9 +57,9 @@ export const getPayloadClient = async ({
 
   try {
     cached.client = await cached.promise;
-  } catch (err: unknown) {
+  } catch (e: unknown) {
     cached.promise = null;
-    throw err;
+    throw e;
   }
 
   return cached.client;
