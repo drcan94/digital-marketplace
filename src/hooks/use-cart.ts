@@ -2,21 +2,21 @@ import { Product } from "@/payload-types";
 import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 
-export type TProduct = Product & { quantity: number };
+export type TProductWithQuantity = Product & { quantity: number };
 
-export type CartItem = {
-  product: TProduct;
+export type TCartItem = {
+  product: TProductWithQuantity;
 };
 
-export type CartState = {
-  items: CartItem[];
-  addItem: (product: TProduct) => void;
+export type TCartState = {
+  items: TCartItem[];
+  addItem: (product: TProductWithQuantity) => void;
   removeItem: (productId: string) => void;
   removeAllSameIds: (productId: string) => void;
   clearCart: () => void;
 };
 
-export const useCart = create<CartState>()(
+export const useCart = create<TCartState>()(
   persist(
     (set) => ({
       items: [],

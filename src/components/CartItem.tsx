@@ -1,10 +1,10 @@
 import { PRODUCT_CATEGORIES } from "@/config";
-import { TProduct, useCart } from "@/hooks/use-cart";
+import { TProductWithQuantity, useCart } from "@/hooks/use-cart";
 import { formatPrice } from "@/lib/utils";
 import { ImageIcon, MinusCircle, PlusCircle, BadgeXIcon } from "lucide-react";
 import Image from "next/image";
 
-const CartItem = ({ product }: { product: TProduct }) => {
+const CartItem = ({ product }: { product: TProductWithQuantity }) => {
   const { image } = product.images[0];
 
   const { removeItem, addItem, removeAllSameIds } = useCart();
