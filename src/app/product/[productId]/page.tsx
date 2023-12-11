@@ -1,9 +1,11 @@
 import AddToCartButton from "@/components/AddToCartButton";
 import ImageSlider from "@/components/ImageSlider";
+import ItemQuantity from "@/components/ItemQuantity";
 import MaxWidthWrapper from "@/components/MaxWidthWrapper";
 import ProductReel from "@/components/ProductReel";
 import { PRODUCT_CATEGORIES } from "@/config";
 import { getPayloadClient } from "@/get-payload";
+import { TProductWithQuantity } from "@/hooks/use-cart";
 import { formatPrice } from "@/lib/utils";
 import { Check, Shield } from "lucide-react";
 import Link from "next/link";
@@ -38,7 +40,7 @@ const Page = async ({ params }: PageProps) => {
     },
   });
 
-  const [product] = products;
+  const [product] = products as TProductWithQuantity[];
 
   if (!product) return notFound();
 
@@ -85,6 +87,7 @@ const Page = async ({ params }: PageProps) => {
               <h1 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
                 {product.name}
               </h1>
+              <ItemQuantity productId={productId} />
             </div>
 
             <section className="mt-4">
@@ -116,14 +119,14 @@ const Page = async ({ params }: PageProps) => {
             </section>
           </div>
 
-          {/* Product images */}
+          {/* Product Images */}
           <div className="mt-10 lg:col-start-2 lg:row-span-2 lg:mt-0 lg:self-center">
             <div className="aspect-square rounded-lg">
               <ImageSlider urls={validUrls} />
             </div>
           </div>
 
-          {/* add to cart part */}
+          {/* Add to Cart */}
           <div className="mt-10 lg:col-start-1 lg:row-start-2 lg:max-w-lg lg:self-start">
             <div>
               <div className="mt-10">
