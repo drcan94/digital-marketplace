@@ -40,13 +40,14 @@ export const paymentRouter = router({
         collection: "orders",
         data: {
           _isPaid: false,
+          user: user.id,
           orderedProducts: productQuantities.map((prod) => {
+            // if you wonder why we're not using the "products" array here, read the collections/Orders/index.tsx comments :)
             return {
               product: prod.id,
               quantity: prod.quantity,
             };
           }),
-          user: user.id,
         },
       });
 
