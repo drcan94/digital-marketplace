@@ -1,0 +1,25 @@
+Steps:
+ - npx create-next-app@latest beeakademi
+ - keyboard shortcut for selection arrangement -> emmet balance (outword) -> ctrl + m
+ - source of component scripts -> npx shadcn-ui@latest init
+ - shadcn button -> npx shadcn-ui@latest add button -> components/ui/button.tsx
+ - icon-library -> npm install lucide-react
+ - cart component -> npx shadcn-ui@latest add sheet
+ - npx shadcn-ui@latest add separator
+ - npm i express @types/express
+ - npm i dotenv
+ - npm i -D ts-node
+ - npm i payload
+ - npm i cross-env -> package.json > scripts > change "dev" to "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts nodemon",
+ - npm i @payloadcms/richtext-slate @payloadcms/bundler-webpack @payloadcms/db-mongodb
+ - npx shadcn-ui@latest add input
+ - npx shadcn-ui@latest add label
+ - npm i react-hook-form @hookform/resolvers zod sonner
+ - npm i @trpc/client @trpc/next @trpc/react-query @trpc/server @tanstack/react-query
+ - add "generate:types": "cross-env PAYLOAD_CONFIG_PATH=src/payload.config.ts payload generate:types" to package.json file
+ - and run "npm run generate:types"
+ - it will create a file at "src/payload-types.ts"
+ - Sending mail -> resend api and "npm i nodemailer" and "npm i --save-dev @types/nodemailer"
+ - npx shadcn-ui@latest add dropdown-menu
+ - npx shadcn-ui@latest add skeleton
+ - npx shadcn-ui@latest add scrollarea
