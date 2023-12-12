@@ -1,5 +1,5 @@
 import { formatPrice } from "../../lib/utils";
-import { Product } from "../../payload-types";
+import { Order, Product } from "../../payload-types";
 
 import {
   Body,
@@ -26,6 +26,7 @@ interface ReceiptEmailProps {
   date: Date;
   orderId: string;
   products: Product[];
+  order: Order;
 }
 
 export const ReceiptEmail = ({
@@ -33,9 +34,13 @@ export const ReceiptEmail = ({
   date,
   orderId,
   products,
+  order,
 }: ReceiptEmailProps) => {
-  const total = products.reduce((acc, curr) => acc + curr.price, 0) + 1;
-
+  const total = order.orderedProducts.reduce(
+    (total, { product, quantity }) =>
+      total + (product as Product).price * quantity,
+    0
+  );
   return (
     <Html>
       <Head />

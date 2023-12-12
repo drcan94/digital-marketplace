@@ -23,3 +23,8 @@ Steps:
  - npx shadcn-ui@latest add dropdown-menu
  - npx shadcn-ui@latest add skeleton
  - npx shadcn-ui@latest add scrollarea
+ - npm i stripe
+ - go to stripe website and login.. get a secret key and create a product (type searcbar "product", it  will come)
+ - copy secret key and paste it into .env
+ - get a price id like "price_1OMIIEB2rnUmx5fRFYwYq40J" 
+ - test card -> 424242... other details can be random

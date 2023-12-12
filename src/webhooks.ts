@@ -93,6 +93,7 @@ export const stripeWebhookHandler = async (
           products: order.orderedProducts.map(
             (prod) => prod.product as Product
           ),
+          order,
         }),
       });
       res.status(200).json({ data });
